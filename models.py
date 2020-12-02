@@ -14,8 +14,25 @@ class User(UserMixin, Model):
     class Meta:
         database = DATABASE
 
+class Recipe(Model):
+    title = CharField()
+    servings = IntegerField()
+    image = CharField()
+    readyInMinutes = IntegerField()
+    instructions = CharField()
+    owner = ForeignKeyField(User, backref="recipes")
+    ingredients = CharField()
+    class Meta:
+        database = DATABASE
+
+class Ingredients(Model):
+    user = ForeignKeyField(User, backref="ingredients")
+    recipe = ForeignKeyField(Recipe, backref="ingredients")
+    class Meta:
+        database = DATABASE
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User], safe=True)
+    DATABASE.create_tables([User, Recipe], safe=True)
     print("tables created")
     DATABASE.close()

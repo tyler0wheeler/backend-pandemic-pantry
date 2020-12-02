@@ -1,9 +1,10 @@
-from flask import Flask
+import os
 from flask import Flask, jsonify, g
 import models
 from flask_login import LoginManager
 from flask_cors import CORS
 from blueprints.users import user
+from blueprints.recipes import recipe
 
 DEBUG = True
 PORT = 8000
@@ -22,9 +23,11 @@ def load_user(user_id):
 
     except models.DoesNotExist:
         return None
+CORS(recipe, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
 
 app.register_blueprint(user, url_prefix='/pandemic-pantry/users/')
-
+app.register_blueprint(recipe, url_prefix='/pandemic-pantry/recipes/')
 # The default URL ends in / ("my-website.com/").
 
 @app.before_request
@@ -39,10 +42,7 @@ def after_request(response):
     g.db.close()
     return response
 
-@app.route('/')
-def index():
-    return 'hi'
-# Run the app when the program starts!
+
 if __name__ == '__main__':
     models.initialize()
     app.run(debug=DEBUG, port=PORT)
