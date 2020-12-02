@@ -24,7 +24,7 @@ def get_all_recipes():
 def create_recipe():
     payload = request.get_json()
     print(type(payload), 'payload')
-    user_recipe = models.Recipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions=payload["instructions"], owner=current_user.id, ingredients=payload[ingredients])
+    user_recipe = models.Recipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions=payload["instructions"], owner=current_user.id)
     recipe_dict = model_to_dict(user_recipe)
     return jsonify(data=recipe_dict, status={"code": 200, "message": "Success"})
 
@@ -40,7 +40,7 @@ def get_one_user():
     # payload = request.get_json()
     # owner = payload['owner']
     # print(owner)
-    recipes = [model_to_dict(recipe) for recipe in current_user.recipe]
+    recipes = [model_to_dict(recipe) for recipe in current_user.recipes]
     return jsonify(data=recipes, status={"code": 200, "message": "Success"})
 
 @recipe.route('/<id>', methods=["PUT"])
