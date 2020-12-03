@@ -40,7 +40,10 @@ def get_one_user():
     # payload = request.get_json()
     # owner = payload['owner']
     # print(owner)
-    ingredients = [model_to_dict(ingredients)for ingredients in models.Ingredients.select()]
+    ingredient_id = models.Ingredients.id
+    ingredient = models.Ingredients.ingredient
+    recipe_number = models.Ingredients.recipe
+    ingredients = [model_to_dict(ingredients)for ingredients in models.Ingredients.select(ingredient_id, ingredient, recipe_number)]
     recipes = [model_to_dict(recipe) for recipe in current_user.recipes]
     return jsonify(data={"recipes":recipes, "ingredients":ingredients}, status={"code": 200, "message": "Success"})
 
@@ -73,8 +76,8 @@ def add_ingredient(recipe_id):
     payload = request.get_json()
     print(type(payload), 'payload')
     add_ingredient_recipe_id = recipe_id
-    user_who_added_ingredient = current_user.id
-    add_ingredient = models.Ingredients.create(ingredient=payload["ingredient"], user=user_who_added_ingredient, recipe=add_ingredient_recipe_id)
+    # user_who_added_ingredient = current_user.id
+    add_ingredient = models.Ingredients.create(ingredient=payload["ingredient"], recipe=add_ingredient_recipe_id)
     new_ingredient = model_to_dict(add_ingredient)
     return jsonify(data=new_ingredient, status={"code": 200, "message": "Successfully added ingredient"})
 
@@ -85,3 +88,12 @@ def delete_ingredient(recipe_id):
     num_of_rows_ingredient_deleted = delete_ingredient_query.execute()
     print(num_of_rows_ingredient_deleted)
     return jsonify(data={}, message="Successfully deleted {} ingredient with id {}".format(num_of_rows_ingredient_deleted, recipe_id), status={"code":200})
+
+@recipe.route('/delete-all-ingredients/<recipe_id>', methods=["DELETE"])
+@login_required
+def delete_all_ingredients(recipe_id):
+    # find_recipe_id = [recipe for recipe in models.Ingredients.recipe if recipe["id"]==recipe_id]
+    delete_all_ingredients_query= models.Ingredients.delete().where(models.Ingredients.recipe==recipe_id)
+    num_of_rows_ingredient_deleted = delete_all_ingredients_query.execute()
+    print(num_of_rows_ingredient_deleted)
+    return jsonify(data={}, message="Successfully deleted {} ingredients with id {}".format(num_of_rows_ingredient_deleted, recipe_id), status={"code":200}) 

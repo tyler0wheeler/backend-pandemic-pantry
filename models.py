@@ -26,7 +26,7 @@ class Recipe(Model):
 
 class Ingredients(Model):
     ingredient = CharField()
-    user = ForeignKeyField(User, backref="ingredients")
+    # user = ForeignKeyField(User, backref="ingredients")
     recipe = ForeignKeyField(Recipe, backref="ingredients")
     class Meta:
         database = DATABASE
