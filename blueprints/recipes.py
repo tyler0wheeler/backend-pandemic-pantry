@@ -40,8 +40,9 @@ def get_one_user():
     # payload = request.get_json()
     # owner = payload['owner']
     # print(owner)
+    ingredients = [model_to_dict(ingredients)for ingredients in models.Ingredients.select()]
     recipes = [model_to_dict(recipe) for recipe in current_user.recipes]
-    return jsonify(data=recipes, status={"code": 200, "message": "Success"})
+    return jsonify(data={"recipes":recipes, "ingredients":ingredients}, status={"code": 200, "message": "Success"})
 
 @recipe.route('/<id>', methods=["PUT"])
 @login_required
@@ -64,3 +65,23 @@ def delete_recipe(id):
     message="Successfully deleted {} post with id {}".format(num_of_rows_deleted, id),
     status={"code": 200}
     )
+
+
+@recipe.route('/ingredient/<recipe_id>', methods=["POST"])
+@login_required
+def add_ingredient(recipe_id):
+    payload = request.get_json()
+    print(type(payload), 'payload')
+    add_ingredient_recipe_id = recipe_id
+    user_who_added_ingredient = current_user.id
+    add_ingredient = models.Ingredients.create(ingredient=payload["ingredient"], user=user_who_added_ingredient, recipe=add_ingredient_recipe_id)
+    new_ingredient = model_to_dict(add_ingredient)
+    return jsonify(data=new_ingredient, status={"code": 200, "message": "Successfully added ingredient"})
+
+@recipe.route('/delete-ingredient/<recipe_id>', methods=["DELETE"])
+@login_required
+def delete_ingredient(recipe_id):
+    delete_ingredient_query = models.Ingredients.delete().where(models.Ingredients.id==recipe_id)
+    num_of_rows_ingredient_deleted = delete_ingredient_query.execute()
+    print(num_of_rows_ingredient_deleted)
+    return jsonify(data={}, message="Successfully deleted {} ingredient with id {}".format(num_of_rows_ingredient_deleted, recipe_id), status={"code":200})

@@ -24,15 +24,15 @@ class Recipe(Model):
     class Meta:
         database = DATABASE
 
-# class Ingredients(Model):
-#     ingredient = CharField()
-#     user = ForeignKeyField(User, backref="ingredients")
-#     recipe = ForeignKeyField(Recipe, backref="ingredients")
-#     class Meta:
-#         database = DATABASE
+class Ingredients(Model):
+    ingredient = CharField()
+    user = ForeignKeyField(User, backref="ingredients")
+    recipe = ForeignKeyField(Recipe, backref="ingredients")
+    class Meta:
+        database = DATABASE
 
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User, Recipe], safe=True)
+    DATABASE.create_tables([User, Recipe, Ingredients], safe=True)
     print("tables created")
     DATABASE.close()
