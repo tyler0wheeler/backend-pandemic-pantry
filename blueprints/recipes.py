@@ -69,7 +69,6 @@ def delete_recipe(id):
     status={"code": 200}
     )
 
-
 @recipe.route('/ingredient/<recipe_id>', methods=["POST"])
 @login_required
 def add_ingredient(recipe_id):
