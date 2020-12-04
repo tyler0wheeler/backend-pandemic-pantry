@@ -13,9 +13,13 @@ recipe = Blueprint('recipes', 'recipe')
 @recipe.route('/', methods =["GET"])
 def get_all_recipes():
     try:
-        recipes = [model_to_dict(recipe) for recipe in models.Recipe.select()]
-        print(recipes)
-        return jsonify(data={"recipes":recipes}, status={"code": 200, "message": "Success"})
+        ingredient_id = models.Ingredients.id
+        ingredient = models.Ingredients.ingredient
+        recipe_number = models.Ingredients.recipe
+        ingredients = [model_to_dict(ingredients)for ingredients in models.Ingredients.select(ingredient_id, ingredient, recipe_number)]
+        recipes = [model_to_dict(recipe) for recipe in models.Recipe.select() if recipe.shared == True]
+        # print(recipes)
+        return jsonify(data={"recipes":recipes, "ingredients":ingredients}, status={"code": 200, "message": "Success"})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting this data"})
 
@@ -24,7 +28,7 @@ def get_all_recipes():
 def create_recipe():
     payload = request.get_json()
     print(type(payload), 'payload')
-    user_recipe = models.Recipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions=payload["instructions"], owner=current_user.id)
+    user_recipe = models.Recipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions=payload["instructions"], owner=current_user.id, shared=payload["shared"])
     recipe_dict = model_to_dict(user_recipe)
     return jsonify(data=recipe_dict, status={"code": 200, "message": "Success"})
 

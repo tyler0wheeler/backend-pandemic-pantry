@@ -21,12 +21,12 @@ class Recipe(Model):
     readyInMinutes = IntegerField()
     instructions = CharField()
     owner = ForeignKeyField(User, backref="recipes")
+    shared = BooleanField(default=False)
     class Meta:
         database = DATABASE
 
 class Ingredients(Model):
     ingredient = CharField()
-    # user = ForeignKeyField(User, backref="ingredients")
     recipe = ForeignKeyField(Recipe, backref="ingredients")
     class Meta:
         database = DATABASE
