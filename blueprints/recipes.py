@@ -23,6 +23,19 @@ def get_all_recipes():
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting this data"})
 
+# @recipe.route('/search-recipes/<search>', methods =["GET"])
+# def get_all_recipes():
+#     try:
+#         ingredient_id = models.Ingredients.id
+#         ingredient = models.Ingredients.ingredient
+#         recipe_number = models.Ingredients.recipe
+#         ingredients = [model_to_dict(ingredients)for ingredients in models.Ingredients.select(ingredient_id, ingredient, recipe_number)]
+#         recipes = [model_to_dict(recipe) for recipe in models.Recipe.select() if recipe.shared == True and models.Recipe.title.find(search)]
+#         # print(recipes)
+#         return jsonify(data={"recipes":recipes, "ingredients":ingredients}, status={"code": 200, "message": "Success"})
+#     except models.DoesNotExist:
+#         return jsonify(data={}, status={"code": 401, "message": "Error getting this data"})
+
 @recipe.route('/', methods =["POST"])
 @login_required
 def create_recipe():

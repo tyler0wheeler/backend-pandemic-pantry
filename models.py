@@ -31,8 +31,26 @@ class Ingredients(Model):
     class Meta:
         database = DATABASE
 
+class SearchedRecipe(Model):
+    title = CharField()
+    servings = IntegerField()
+    image = CharField()
+    readyInMinutes = IntegerField()
+    instructions = CharField()
+    owner = ForeignKeyField(User, backref="searchedrecipes")
+    ingredients = CharField()
+    recipeId = IntegerField()
+    class Meta:
+        database = DATABASE
+
+class SearchedIngredients(Model):
+    ingredient = CharField()
+    recipe = ForeignKeyField(SearchedRecipe, backref="searchedingredients")
+    class Meta:
+        database = DATABASE
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User, Recipe, Ingredients], safe=True)
+    DATABASE.create_tables([User, Recipe, Ingredients, SearchedRecipe, SearchedIngredients], safe=True)
     print("tables created")
     DATABASE.close()

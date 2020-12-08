@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_cors import CORS
 from blueprints.users import user
 from blueprints.recipes import recipe
+from blueprints.searchedrecipes import searchedrecipe
 
 DEBUG = True
 PORT = 8000
@@ -25,9 +26,11 @@ def load_user(user_id):
         return None
 CORS(recipe, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(searchedrecipe, origins=['http://localhost:3000'], supports_credentials=True)
 
 app.register_blueprint(user, url_prefix='/pandemic-pantry/users/')
 app.register_blueprint(recipe, url_prefix='/pandemic-pantry/recipes/')
+app.register_blueprint(searchedrecipe, url_prefix='/pandemic-pantry/searched-recipes/')
 # The default URL ends in / ("my-website.com/").
 
 @app.before_request
