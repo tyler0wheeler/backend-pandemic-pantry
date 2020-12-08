@@ -45,6 +45,9 @@ def after_request(response):
     g.db.close()
     return response
 
+if 'ON_HEROKU' in os.environ:
+    print('\non heroku!')
+    models.initialize()
 
 if __name__ == '__main__':
     models.initialize()

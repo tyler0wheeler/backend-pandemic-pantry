@@ -5,8 +5,10 @@ from flask_login import UserMixin
 # from playhouse.postgres_ext import PostgresqlExtDatabase, ArrayField
 from playhouse.db_url import connect
 
-
-DATABASE = SqliteDatabase('pantry.sqlite')
+if 'ON_HEROKU' in os.environ:
+    DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+    DATABASE = SqliteDatabase('pantry.sqlite')
 
 class User(UserMixin, Model):
     username = CharField(unique=True)
