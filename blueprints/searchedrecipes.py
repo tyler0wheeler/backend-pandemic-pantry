@@ -32,7 +32,7 @@ def create_recipe():
     print(payload["readyInMinutes"])
     print(payload["instructions"])
     print(payload["recipeId"])
-    print(payload["owner"])
+    print(current_user)
     return jsonify(data={}, status={"code": 200, "message": "Success"})
 
 # @searchedrecipe.route('/searchedingredient/<recipe_id>', methods=["POST"])
