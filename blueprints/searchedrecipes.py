@@ -23,7 +23,7 @@ def get_one_user():
 def create_recipe():
     payload = request.get_json()
     # print(type(payload), payload)
-    user_searched_recipe = models.SearchedRecipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions="hello", owner=current_user.id, recipeId=payload["recipeId"], ingredients=payload["ingredients"])
+    user_searched_recipe = models.SearchedRecipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions="hello", owner=current_user.id, recipeId=payload["recipeId"], ingredients="hello")
     searched_recipe_dict = model_to_dict(user_searched_recipe)
     print(payload["ingredients"])
     print(payload["title"])
