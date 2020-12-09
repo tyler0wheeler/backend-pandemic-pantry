@@ -38,9 +38,9 @@ class SearchedRecipe(Model):
     servings = IntegerField()
     image = CharField()
     readyInMinutes = IntegerField()
-    instructions = CharField(max_length=500)
+    instructions = CharField(max_length=700)
     owner = ForeignKeyField(User, backref="searchedrecipes")
-    ingredients = CharField(max_length=500)
+    ingredients = CharField(max_length=700)
     recipeId = IntegerField()
     class Meta:
         database = DATABASE
