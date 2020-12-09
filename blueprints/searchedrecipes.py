@@ -15,13 +15,6 @@ searchedrecipe = Blueprint('searchedrecipes', 'searchedrecipe')
 @searchedrecipe.route('/savedrecipes/', methods=["GET"])
 @login_required
 def get_one_user():
-    # payload = request.get_json()
-    # owner = payload['owner']
-    # print(owner)
-    # ingredient_id = models.SearchedIngredients.id
-    # ingredient = models.SearchedIngredients.ingredient
-    # recipe_number = models.SearchedIngredients.recipe.recipeId
-    # ingredients = [model_to_dict(ingredients)for ingredients in models.SearchedIngredients.select()]
     searched_recipes = [model_to_dict(recipe) for recipe in current_user.searchedrecipes]
     return jsonify(data={"searchedrecipes":searched_recipes}, status={"code": 200, "message": "Success"})
 
