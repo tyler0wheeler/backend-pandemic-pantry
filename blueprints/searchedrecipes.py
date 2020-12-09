@@ -22,9 +22,16 @@ def get_one_user():
 @login_required
 def create_recipe():
     payload = request.get_json()
-    print(type(payload), payload)
-    user_searched_recipe = models.SearchedRecipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions=payload["instructions"], owner=current_user.id, recipeId=payload["recipeId"], ingredients=payload["ingredients"])
+    # print(type(payload), payload)
+    # user_searched_recipe = models.SearchedRecipe.create(title=payload["title"], servings=payload["servings"], image=payload["image"], readyInMinutes=payload["readyInMinutes"], instructions=payload["instructions"], owner=current_user.id, recipeId=payload["recipeId"], ingredients=payload["ingredients"])
     # searched_recipe_dict = model_to_dict(user_searched_recipe)
+    print(payload["ingredients"])
+    print(payload["title"])
+    print(payload["servings"])
+    print(payload["image"])
+    print(payload["readyInMinutes"])
+    print(payload["instructions"])
+    print(payload["recipeId"])
     return jsonify(data={}, status={"code": 200, "message": "Success"})
 
 # @searchedrecipe.route('/searchedingredient/<recipe_id>', methods=["POST"])
