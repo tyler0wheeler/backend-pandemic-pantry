@@ -40,7 +40,7 @@ class SearchedRecipe(Model):
     readyInMinutes = IntegerField()
     instructions = TextField()
     owner = ForeignKeyField(User, backref="searchedrecipes")
-    ingredients = CharField()
+    ingredients = TextField()
     recipeId = IntegerField()
     class Meta:
         database = DATABASE
