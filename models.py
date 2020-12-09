@@ -21,7 +21,7 @@ class Recipe(Model):
     servings = IntegerField()
     image = CharField()
     readyInMinutes = IntegerField()
-    instructions = CharField()
+    instructions = TextField()
     owner = ForeignKeyField(User, backref="recipes")
     shared = BooleanField(default=False)
     class Meta:
