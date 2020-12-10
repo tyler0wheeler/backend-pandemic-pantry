@@ -71,5 +71,5 @@ def login():
 
 @user.route('/logout/', methods=["GET"])
 def logout():
-    logout_user() # this line will need to be imported
+    logout_user()
     return jsonify(data={}, status={'code': 200, 'message': 'successful logout'})

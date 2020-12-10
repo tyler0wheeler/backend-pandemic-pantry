@@ -35,7 +35,7 @@ CORS(searchedrecipe, origins=['http://localhost:3000', 'https://the-pandemic-pan
 app.register_blueprint(user, url_prefix='/pandemic-pantry/users/')
 app.register_blueprint(recipe, url_prefix='/pandemic-pantry/recipes/')
 app.register_blueprint(searchedrecipe, url_prefix='/pandemic-pantry/searched-recipes/')
-# The default URL ends in / ("my-website.com/").
+
 
 @app.before_request
 def before_request():
